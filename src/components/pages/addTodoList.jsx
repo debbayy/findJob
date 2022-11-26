@@ -5,10 +5,19 @@ import { Col, Row } from 'react-bootstrap'
 import { faBan, faAdd, faCheck, faAngleLeft, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EmptyIcon } from '../../assets';
+import Select from 'react-select';
 
 
 const AddTodoList = () => {
     const [modal, setModal] = useState(false);
+    const options = [
+        { value: 'veryHigh', label: 'Very High' },
+        { value: 'high', label: 'High' },
+        { value: 'medium', label: 'Medium' },
+        { value: 'low', label: 'Low' },
+        { value: 'verylow', label: 'Very Low' },
+    ];
+
 
     const toggle = () => setModal(!modal);
     return (
@@ -29,12 +38,19 @@ const AddTodoList = () => {
                             className='w-100'
                             type="text"
                         />
+
                     </FormGroup>
-
-
+                    <FormGroup >
+                        <Label className="small fw-bold ">PRIORITY</Label>
+                        <Select
+                            options={options}
+                            placeholder="Pilih Priority"
+                            className='w-25'
+                        />
+                    </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="info" className='text-white rounded-pill px-5 p-3' onClick={toggle}>
+                    <Button color="info" className='text-white shadow rounded-pill px-5 p-3' onClick={toggle}>
                         Simpan
                     </Button>
 
