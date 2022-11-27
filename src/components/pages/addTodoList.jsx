@@ -19,9 +19,12 @@ const AddTodoList = () => {
         { value: 'low', label: 'Low' },
         { value: 'verylow', label: 'Very Low' },
     ];
-function listItem() {
-    navigate("/List-Items")
-}
+    function listItem() {
+        navigate("/List-Items")
+    }
+    function home() {
+        navigate("/")
+    }
 
     const toggle = () => setModal(!modal);
     return (
@@ -64,7 +67,7 @@ function listItem() {
             <Row>
                 <Col>
                     <Label className='fw-bold fs-1'>
-                        <FontAwesomeIcon className="icon pr-1 me-5" icon={faAngleLeft} />
+                        <FontAwesomeIcon className="icon pr-1 me-5" onClick={home} style={{ cursor: "pointer" }} icon={faAngleLeft} />
                         New Activity
                         <FontAwesomeIcon className="icon pr-1 mx-5" icon={faEdit} />
                     </Label>

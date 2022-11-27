@@ -35,7 +35,11 @@ const Home = () => {
         return dateFormat;
     };
 
-    const data = []
+    function listItem() {
+        navigate("/List-Items")
+    }
+
+    console.log(activity.length, "ini isinya apaan")
     return (
         <Col className='container'>
             <Modal
@@ -91,39 +95,34 @@ const Home = () => {
                 <Col>
                     <Col className='d-flex my-2 flex-row-reverse'>
                         <Button color='info' onClick={addActivity} className='rounded-pill text-white fw-bold px-4 py-2'>
-                            <FontAwesomeIcon className="icon pr-1 mx-1 fw-bold" icon={faAdd}  />
+                            <FontAwesomeIcon className="icon pr-1 mx-1 fw-bold" icon={faAdd} />
                             Tambah</Button>
                     </Col>
                 </Col>
             </Row>
             <Row className='my-5 ' >
-                {activity.map((item) => {
-                    console.log(item, "ini apaa ini haaa");
-                    return (
-                        <>
-                            {activity < 1 ? (
-                                <>
-                                    <HomeIcon />
-                                </>
-                            ) : (
-                                <>
-                                    <Col sm="3" >
-                                        <Card className='d-flex flex-column border border-0 rounded shadow my-2'
-                                            style=
-                                            {{
-                                                minHeight: "30vh"
-                                            }}>
-                                            <Label className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
-                                            <Label className='fs-5 m-4' >{formatDate(item.created_at)} <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold" style={{ cursor: "pointer" }} onClick={toggle} icon={faTrash} /></Label>
-                                        </Card>
-                                    </Col>
-                                </>
-
-                            )}
-                        </>
-                    );
-                })}
-
+                {activity.length === 0 ? (
+                    <>
+                        <HomeIcon />
+                    </>
+                ) : (
+                    <>
+                        {activity.map((item) => {
+                            return (
+                                <Col sm="3" >
+                                    <Card className='d-flex flex-column border border-0 rounded shadow my-2'
+                                        style=
+                                        {{
+                                            minHeight: "30vh"
+                                        }}>
+                                        <Label onClick={listItem} style={{ cursor: "pointer" }} className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
+                                        <Label className='fs-5 m-4' >{formatDate(item.created_at)} <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold" style={{ cursor: "pointer" }} onClick={toggle} icon={faTrash} /></Label>
+                                    </Card>
+                                </Col>
+                            );
+                        })}
+                    </>
+                )}
             </Row >
         </Col >
     )
