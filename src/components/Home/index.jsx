@@ -9,6 +9,8 @@ import { HomeIcon } from '../../assets';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { listActivity } from '../../redux/todosSlicer';
+import moment from 'moment';
+
 
 
 const Home = () => {
@@ -27,7 +29,11 @@ const Home = () => {
     useEffect(() => {
         dispatch(listActivity())
     }, [])
-    console.log(activity);
+
+    const formatDate = (cell, row) => {
+        let dateFormat = moment(cell).format("DD-MM-YYYY");
+        return dateFormat;
+    };
 
     const data = []
     return (
@@ -91,19 +97,30 @@ const Home = () => {
                 </Col>
             </Row>
             <Row className='my-5 ' >
-                {data.map((item) => {
-                    console.log(item);
+                {activity.map((item) => {
+                    console.log(item, "ini apaa ini haaa");
                     return (
-                        <Col sm="3" >
-                            <Card className='d-flex flex-column border border-0 rounded shadow my-2'
-                                style=
-                                {{
-                                    minHeight: "30vh"
-                                }}>
-                                <Label className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
-                                <Label className='fs-5 m-4' >{item.created_at} <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold" style={{ cursor: "pointer" }} onClick={toggle} icon={faTrash} /></Label>
-                            </Card>
-                        </Col>
+                        <>
+                            {activity === 0 ? (
+                                <>
+                                    <HomeIcon />
+                                </>
+                            ) : (
+                                <>
+                                    <Col sm="3" >
+                                        <Card className='d-flex flex-column border border-0 rounded shadow my-2'
+                                            style=
+                                            {{
+                                                minHeight: "30vh"
+                                            }}>
+                                            <Label className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
+                                            <Label className='fs-5 m-4' >{formatDate(item.created_at)} <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold" style={{ cursor: "pointer" }} onClick={toggle} icon={faTrash} /></Label>
+                                        </Card>
+                                    </Col>
+                                </>
+
+                            )}
+                        </>
                     );
                 })}
 
