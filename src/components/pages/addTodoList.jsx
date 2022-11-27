@@ -6,9 +6,11 @@ import { faBan, faAdd, faCheck, faAngleLeft, faEdit } from '@fortawesome/free-so
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EmptyIcon } from '../../assets';
 import Select from 'react-select';
+import { useNavigate } from 'react-router-dom';
 
 
 const AddTodoList = () => {
+    const navigate = useNavigate()
     const [modal, setModal] = useState(false);
     const options = [
         { value: 'veryHigh', label: 'Very High' },
@@ -17,7 +19,9 @@ const AddTodoList = () => {
         { value: 'low', label: 'Low' },
         { value: 'verylow', label: 'Very Low' },
     ];
-
+function listItem() {
+    navigate("/List-Items")
+}
 
     const toggle = () => setModal(!modal);
     return (
@@ -50,7 +54,7 @@ const AddTodoList = () => {
                     </FormGroup>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="info" className='text-white shadow rounded-pill px-5 p-3' onClick={toggle}>
+                    <Button color="info" className='text-white shadow rounded-pill px-5 p-3' onClick={listItem}>
                         Simpan
                     </Button>
 
@@ -68,7 +72,7 @@ const AddTodoList = () => {
                 </Col>
                 <Col>
                     <Col className='d-flex my-2 flex-row-reverse'>
-                        <Button className='rounded-pill fw-bold px-4 py-2 bg-info' onClick={toggle}>
+                        <Button color='info' className='rounded-pill fw-bold px-4 py-2' onClick={toggle}>
                             <FontAwesomeIcon className="icon pr-1 mx-1 fw-bold" icon={faAdd} />
                             Tambah</Button>
                     </Col>
