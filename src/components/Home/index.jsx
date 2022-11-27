@@ -90,8 +90,8 @@ const Home = () => {
                 </Col>
                 <Col>
                     <Col className='d-flex my-2 flex-row-reverse'>
-                        <Button color='info' className='rounded-pill text-white fw-bold px-4 py-2'>
-                            <FontAwesomeIcon className="icon pr-1 mx-1 fw-bold" icon={faAdd} onClick={addActivity} />
+                        <Button color='info' onClick={addActivity} className='rounded-pill text-white fw-bold px-4 py-2'>
+                            <FontAwesomeIcon className="icon pr-1 mx-1 fw-bold" icon={faAdd}  />
                             Tambah</Button>
                     </Col>
                 </Col>
@@ -101,7 +101,7 @@ const Home = () => {
                     console.log(item, "ini apaa ini haaa");
                     return (
                         <>
-                            {activity === 0 ? (
+                            {activity < 1 ? (
                                 <>
                                     <HomeIcon />
                                 </>
