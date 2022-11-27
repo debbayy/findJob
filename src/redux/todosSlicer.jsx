@@ -7,7 +7,7 @@ import services from "./services";
 
 
 export const listActivity = createAsyncThunk(
-    "checkPembatalan",
+    "activity-groups?email=yoga%2B1%40skyshi.io",
     async (params, {
         rejectWithValue
     }) => {
@@ -39,10 +39,10 @@ const todosSlicer = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(listActivity.fulfilled, (state, action) => {
-            console.log(action.payload);
-            // if (action.payload !== undefined) {
-            //     state.pkk = action.payload;
-            // }
+            console.log(action.payload.data.data);
+            if (action.payload !== undefined) {
+                state.activity = action.payload.data.data;
+            }
         });
 
     },

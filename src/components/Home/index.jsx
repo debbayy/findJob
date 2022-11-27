@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Label, Modal, ModalHeader, ModalBody, ModalFooter, Input, FormGroup } from 'reactstrap';
 import { Col, Row } from 'react-bootstrap'
 import { Card } from "reactstrap"
@@ -7,8 +7,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DeleteIcon, SuccessDelete } from '../../assets';
 import { HomeIcon } from '../../assets';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { listActivity } from '../../redux/todosSlicer';
+
 
 const Home = () => {
+    const { activity } = useSelector((state) => state.todosSlicer)
+    const dispatch = useDispatch();
     const navigate = useNavigate()
     const [modal, setModal] = useState(false);
     const toggle = () => setModal(!modal);
@@ -19,6 +24,12 @@ const Home = () => {
         navigate("/Tambah-Activity-list");
     }
 
+    useEffect(() => {
+        dispatch(listActivity())
+    }, [])
+    console.log(activity);
+
+    const data = []
     return (
         <Col className='container'>
             <Modal
@@ -80,32 +91,23 @@ const Home = () => {
                 </Col>
             </Row>
             <Row className='my-5 ' >
-                {/* {book.map((item) => {
+                {data.map((item) => {
+                    console.log(item);
                     return (
-                        <div className="col-3  text-start">
-                            {state.user.isSub === "false" ? (
-                                <>
-                                    <HomeIcon />
-                                </>
-                            ) : (
-                                <> */}
-                <Col sm="3">
-                    <Card className='d-flex flex-column border border-0 rounded shadow my-2'
-                        style=
-                        {{
-                            minHeight: "30vh"
-                        }}>
-                        <Label className=' mb-auto fw-bold fs-4 m-4' >New Activity</Label>
-                        <Label className='fs-5 m-4' >6 Oktober 2022  <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold" style={{ cursor: "pointer" }} onClick={toggle} icon={faTrash} /></Label>
-                    </Card>
-                </Col>
-                {/* </>
-                            )}
-                        </div>
+                        <Col sm="3" >
+                            <Card className='d-flex flex-column border border-0 rounded shadow my-2'
+                                style=
+                                {{
+                                    minHeight: "30vh"
+                                }}>
+                                <Label className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
+                                <Label className='fs-5 m-4' >{item.created_at} <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold" style={{ cursor: "pointer" }} onClick={toggle} icon={faTrash} /></Label>
+                            </Card>
+                        </Col>
                     );
-                })} */}
+                })}
 
-            </Row>
+            </Row >
         </Col >
     )
 }
