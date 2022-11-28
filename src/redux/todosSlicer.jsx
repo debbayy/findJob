@@ -61,7 +61,7 @@ export const createData = createAsyncThunk(
 const initialState = {
     activity: [],
     postActivity: {
-        title: "New Activity",
+        title: "Annisa Kurnia robani",
         email: "yoga+1@skyshi.io",
         _comment: "email digunakan untuk membedakan list data yang digunakan antar aplikasi"
     }
