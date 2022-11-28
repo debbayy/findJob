@@ -14,9 +14,18 @@ const services = {
                 } */
                 // }
             )
-            console.log(response)
             return response;
 
+        } catch (err) {
+            return err
+        }
+    },
+
+    postData: async (data) => {
+        try {
+            const response = await api.post("activity-groups", data)
+            console.log(response)
+            return response
         } catch (err) {
             return err
         }

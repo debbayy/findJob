@@ -8,7 +8,7 @@ import { DeleteIcon, SuccessDelete } from '../../assets';
 import { HomeIcon } from '../../assets';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { listActivity } from '../../redux/todosSlicer';
+import { createData, listActivity, setDataActivity } from '../../redux/todosSlicer';
 import moment from 'moment';
 
 
@@ -25,6 +25,7 @@ const Home = () => {
     function addActivity() {
         navigate("/Tambah-Activity-list");
     }
+    
 
     useEffect(() => {
         dispatch(listActivity())
@@ -37,6 +38,10 @@ const Home = () => {
 
     function listItem() {
         navigate("/List-Items")
+    }
+
+    const handlePost =() => {
+        dispatch(createData())
     }
 
     console.log(activity.length, "ini isinya apaan")
@@ -94,7 +99,7 @@ const Home = () => {
                 </Col>
                 <Col>
                     <Col className='d-flex my-2 flex-row-reverse'>
-                        <Button color='info' onClick={addActivity} className='rounded-pill text-white fw-bold px-4 py-2'>
+                        <Button color='info' onClick={handlePost} className='rounded-pill text-white fw-bold px-4 py-2'>
                             <FontAwesomeIcon className="icon pr-1 mx-1 fw-bold" icon={faAdd} />
                             Tambah</Button>
                     </Col>
