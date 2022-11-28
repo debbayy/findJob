@@ -8,10 +8,8 @@ import { DeleteIcon, SuccessDelete } from '../../assets';
 import { HomeIcon } from '../../assets';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { createData, listActivity, setDataActivity } from '../../redux/todosSlicer';
+import { createData, deleteData, listActivity } from '../../redux/todosSlicer';
 import moment from 'moment';
-
-
 
 const Home = () => {
     const { activity } = useSelector((state) => state.todosSlicer)
@@ -21,11 +19,7 @@ const Home = () => {
     const toggle = () => setModal(!modal);
     const [modalDelete, setModalDelete] = useState(false);
     const toggleDelete = () => setModalDelete(!modalDelete);
-
-    function addActivity() {
-        navigate("/Tambah-Activity-list");
-    }
-    
+    const [idActivity, setIdActivity] = useState('')
 
     useEffect(() => {
         dispatch(listActivity())
@@ -40,11 +34,17 @@ const Home = () => {
         navigate("/List-Items")
     }
 
-    const handlePost =() => {
+    const handlePost = () => {
         dispatch(createData())
     }
+    const handleDelete = (e, id) => {
+        setModal(!modal)
+        console.log(e, "apakah ini e**********");
+        console.log(id, "apakah ini e**********");
 
-    console.log(activity.length, "ini isinya apaan")
+    }
+
+    console.log(idActivity, "ini adalah id dari state");
     return (
         <Col className='container'>
             <Modal
@@ -83,8 +83,9 @@ const Home = () => {
                             Batal
                         </Button>
                         <Button color="danger" className='text-white  fw-bold rounded-pill px-5 p-3 mx-2' onClick={() => {
-                            toggle()
+                            dispatch(deleteData({ id: idActivity }))
                             toggleDelete()
+                            toggle()
                         }
                         }>
                             Hapus
@@ -113,6 +114,7 @@ const Home = () => {
                 ) : (
                     <>
                         {activity.map((item) => {
+                            console.log(item.id, "ini id dari mapping")
                             return (
                                 <Col sm="3" >
                                     <Card className='d-flex flex-column border border-0 rounded shadow my-2'
@@ -121,7 +123,16 @@ const Home = () => {
                                             minHeight: "30vh"
                                         }}>
                                         <Label onClick={listItem} style={{ cursor: "pointer" }} className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
-                                        <Label className='fs-5 m-4' >{formatDate(item.created_at)} <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold" style={{ cursor: "pointer" }} onClick={toggle} icon={faTrash} /></Label>
+                                        <Label className='fs-5 m-4' >
+                                            {formatDate(item.created_at)}
+                                            <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold"
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => {
+                                                    setIdActivity(item.id)
+                                                    handleDelete(item.id)
+                                                }
+                                                } icon={faTrash} />
+                                        </Label>
                                     </Card>
                                 </Col>
                             );

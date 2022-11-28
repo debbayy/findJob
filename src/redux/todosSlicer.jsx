@@ -58,10 +58,34 @@ export const createData = createAsyncThunk(
     },
 );
 
+export const deleteData = createAsyncThunk(
+    "activity-groups/:id?",
+    async (params, {
+        rejectWithValue,
+        dispatch,
+        getState
+    }) => {
+
+        try {
+            const response = await services.deleteActivity(params.id);
+            if (response.status === 200) {
+                dispatch(listActivity());
+            }
+            return response.data;
+        } catch (err) {
+            const error = err;
+            if (!error.response) {
+                throw err;
+            }
+            return rejectWithValue(error.response.data);
+        }
+    },
+);
+
 const initialState = {
     activity: [],
     postActivity: {
-        title: "Annisa Kurnia robani",
+        title: "New Activity",
         email: "yoga+1@skyshi.io",
         _comment: "email digunakan untuk membedakan list data yang digunakan antar aplikasi"
     }

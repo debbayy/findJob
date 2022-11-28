@@ -21,9 +21,19 @@ const services = {
         }
     },
 
+    
     postData: async (data) => {
         try {
             const response = await api.post("activity-groups", data)
+            console.log(response)
+            return response
+        } catch (err) {
+            return err
+        }
+    },
+    deleteActivity: async (id) => {
+        try {
+            const response = await api.delete(`activity-groups/:id?id=${id}`)
             console.log(response)
             return response
         } catch (err) {
