@@ -26,7 +26,7 @@ const Home = () => {
     }, [])
 
     const formatDate = (cell, row) => {
-        let dateFormat = moment(cell).format("DD-MM-YYYY");
+        let dateFormat = moment(cell).format("DD-MMMM-YYYY");
         return dateFormat;
     };
 
@@ -123,16 +123,16 @@ const Home = () => {
                                             minHeight: "30vh"
                                         }}>
                                         <Label onClick={listItem} style={{ cursor: "pointer" }} className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
-                                        <Label className='fs-5 m-4' >
-                                            {formatDate(item.created_at)}
-                                            <FontAwesomeIcon className="icon pr-1 ms-5 ps-4 fw-bold"
+                                        {/* <Row className='d-flex'> */}
+                                            <span className='fs-5 mx-4 d-flex justify-content-between mb-4' >{formatDate(item.created_at)}
+                                            <FontAwesomeIcon className="icon pr-1 mt-1 fw-bold "
                                                 style={{ cursor: "pointer" }}
                                                 onClick={() => {
                                                     setIdActivity(item.id)
                                                     handleDelete(item.id)
                                                 }
-                                                } icon={faTrash} />
-                                        </Label>
+                                                } icon={faTrash} /></span>
+                                        {/* </Row> */}
                                     </Card>
                                 </Col>
                             );
