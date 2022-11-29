@@ -15,7 +15,7 @@ function App() {
       <Col className='my-5'>
         <Routes>
           < Route exact path="/" element={<Home />} />
-          < Route exact path="/Tambah-Activity-list" element={<AddTodoList />} />
+          < Route exact path="/Tambah-Activity" element={<AddTodoList />} />
           < Route exact path="/List-Items" element={<ListItems />} />
         </Routes>
       </Col>

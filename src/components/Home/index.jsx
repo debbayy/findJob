@@ -20,31 +20,37 @@ const Home = () => {
     const [modalDelete, setModalDelete] = useState(false);
     const toggleDelete = () => setModalDelete(!modalDelete);
     const [idActivity, setIdActivity] = useState('')
+    const [indexDel, setIndexDel] = useState(null)
+
 
     useEffect(() => {
         dispatch(listActivity())
     }, [])
 
     const formatDate = (cell, row) => {
-        let dateFormat = moment(cell).format("DD-MMMM-YYYY");
+        let dateFormat = moment(cell).format("DD MMMM YYYY");
         return dateFormat;
     };
 
     function listItem() {
-        navigate("/List-Items")
+        navigate("/Tambah-Activity")
     }
 
     const handlePost = () => {
         dispatch(createData())
     }
-    const handleDelete = (e, id) => {
+    const handleDelete = (e) => {
         setModal(!modal)
+        const tempIndex = activity.findIndex((item) => item.id === e) 
+        // console.log(tempIndex, 'ini indexx cui')
+        setIndexDel(tempIndex)
+
         console.log(e, "apakah ini e**********");
-        console.log(id, "apakah ini e**********");
+        // console.log(id, "apakah ini e**********");
 
     }
 
-    console.log(idActivity, "ini adalah id dari state");
+    console.log(activity, "ini adalah id dari state");
     return (
         <Col className='container'>
             <Modal
@@ -69,12 +75,8 @@ const Home = () => {
                         <DeleteIcon />
                     </FormGroup>
                     <FormGroup className='d-flex justify-content-center'>
-
                         <Label className="text-center fs-4 ">Apakah anda yakin menghapus activity<br />
-                            <Label className='fw-bold'>
-
-                                “Meeting dengan Client”?
-                            </Label>
+                            <Label className='fw-bold'>"{activity[indexDel]?.title}"?</Label>
                         </Label>
 
                     </FormGroup>
@@ -95,8 +97,7 @@ const Home = () => {
             </Modal>
             <Row>
                 <Col>
-                    <Label className='fw-bold fs-1'>
-                        Activity                    </Label>
+                    <Label className='fw-bold fs-1'>Activity</Label>
                 </Col>
                 <Col>
                     <Col className='d-flex my-2 flex-row-reverse'>
@@ -114,17 +115,17 @@ const Home = () => {
                 ) : (
                     <>
                         {activity.map((item) => {
-                            console.log(item.id, "ini id dari mapping")
+                            // console.log(item.id, "ini id dari mapping")
                             return (
                                 <Col sm="3" >
-                                    <Card className='d-flex flex-column border border-0 rounded shadow my-2'
+                                    <Card key={item.id} className='d-flex flex-column border border-0 rounded shadow my-2'
                                         style=
                                         {{
                                             minHeight: "30vh"
                                         }}>
                                         <Label onClick={listItem} style={{ cursor: "pointer" }} className=' mb-auto fw-bold fs-4 m-4' >{item.title}</Label>
                                         {/* <Row className='d-flex'> */}
-                                            <span className='fs-5 mx-4 d-flex justify-content-between mb-4' >{formatDate(item.created_at)}
+                                        <span className='fs-5 mx-4 d-flex justify-content-between mb-4' >{formatDate(item.created_at)}
                                             <FontAwesomeIcon className="icon pr-1 mt-1 fw-bold "
                                                 style={{ cursor: "pointer" }}
                                                 onClick={() => {

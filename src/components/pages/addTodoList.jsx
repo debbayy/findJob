@@ -26,6 +26,8 @@ const AddTodoList = () => {
         navigate("/")
     }
 
+    const data = []
+
     const toggle = () => setModal(!modal);
     return (
         <Col className='container'>
@@ -75,16 +77,51 @@ const AddTodoList = () => {
                 </Col>
                 <Col>
                     <Col className='d-flex my-2 flex-row-reverse'>
-                        <Button color='info' className='rounded-pill fw-bold px-4 py-2' onClick={toggle}>
+                        <Button color='info' className='rounded-pill text-white fw-bold px-4 py-2' onClick={toggle}>
                             <FontAwesomeIcon className="icon pr-1 mx-1 fw-bold" icon={faAdd} />
                             Tambah</Button>
                     </Col>
 
                 </Col>
             </Row>
-            <Row className='py-5 my-5'>
-                <EmptyIcon />
-            </Row>
+
+            {data.length !== 0 ? (
+                <Row className='py-5 my-5'>
+                    <EmptyIcon />
+                </Row>
+            ) : (
+                <>
+                    <Row className='py-5 my-5'>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                        <div className='bg-light py-4 my-2 p-2 shadow rounded' style={{ height: "7vh", width: "100%" }}>ini adalah  todo list</div>
+                    </Row>
+                </>
+
+            )}
         </Col>
 
     )

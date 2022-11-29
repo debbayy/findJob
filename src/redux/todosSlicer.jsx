@@ -42,7 +42,6 @@ export const createData = createAsyncThunk(
                 _comment
             };
             const response = await services.postData(payload);
-            console.log(response, "ini respon **************")
             if (response.status === 201) {
                 dispatch(listActivity());
             }
