@@ -34,6 +34,7 @@ const AddTodoList = () => {
             <Modal
                 isOpen={modal}
                 toggle={toggle}
+                centered
                 size='lg'
             >
                 <ModalHeader

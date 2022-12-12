@@ -57,6 +57,7 @@ const Home = () => {
                 isOpen={modalDelete}
                 toggle={toggleDelete}
                 size='ml'
+                centered
             >
                 <ModalBody >
                     <FormGroup className='d-flex justify-content-start pt-2'>
@@ -69,6 +70,7 @@ const Home = () => {
                 isOpen={modal}
                 toggle={toggle}
                 size='ml'
+                centered
             >
                 <ModalBody className='my-3' >
                     <FormGroup className='d-flex justify-content-center'>
