@@ -30,9 +30,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EmptyIcon } from "../../assets";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const { detail } = useSelector((state) => state.slicer);
   function home() {
     navigate("/home");
   }
@@ -57,10 +59,9 @@ const Detail = () => {
     <Container>
       <Row>
         <Col>
-          <Label className="fw-bold fs-5">
+          <Label onClick={home} className="fw-bold fs-5">
             <FontAwesomeIcon
               className="icon pr-1 me-3"
-              onClick={home}
               style={{ cursor: "pointer" }}
               icon={faAngleLeft}
             />
@@ -74,9 +75,9 @@ const Detail = () => {
       >
         <Row className="p-3">
           <span>
-            {data.type} / {data.location}
+            {detail.type} / {detail.location}
           </span>
-          <h3 className="fw-bold">{data.title}</h3>
+          <h3 className="fw-bold">{detail.title}</h3>
 
           <div className="border mt-4" />
         </Row>
@@ -84,7 +85,7 @@ const Detail = () => {
           <Col
             md={8}
             className="mx-3"
-            dangerouslySetInnerHTML={{ __html: data.description }}
+            dangerouslySetInnerHTML={{ __html: detail.description }}
           />
           <Col>
             <Card
@@ -93,12 +94,12 @@ const Detail = () => {
                 width: "18rem",
               }}
             >
-              <CardHeader>{data.company}</CardHeader>
+              <CardHeader>{detail.company}</CardHeader>
               <CardBody>
                 <CardText>
-                  <img src={data.company_logo} alt="logo" />
+                  <img src={detail.company_logo} alt="logo" />
                   <CardText
-                    dangerouslySetInnerHTML={{ __html: data.company_url }}
+                    dangerouslySetInnerHTML={{ __html: detail.company_url }}
                   />
                 </CardText>
               </CardBody>
@@ -112,7 +113,7 @@ const Detail = () => {
               <CardHeader>How To Apply</CardHeader>
               <CardBody>
                 <CardText
-                  dangerouslySetInnerHTML={{ __html: data.how_to_apply }}
+                  dangerouslySetInnerHTML={{ __html: detail.how_to_apply }}
                 />
               </CardBody>
             </Card>

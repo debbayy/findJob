@@ -1,39 +1,50 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://todo.api.devcode.gethired.id/",
+  baseURL: "http://localhost:5000/api/v2/",
 });
 
 const services = {
-  getList: async (idUser, document) => {
+  login: async (data) => {
     try {
-      const response = await api.get(
-        `activity-groups?email=yoga%2B1%40skyshi.io` /* , {
-                params: {
-                    idUser,
-                    document
-                } */
-        // }
-      );
+      const response = await api.post("/login", data);
+      console.log(response);
       return response;
     } catch (err) {
       return err;
     }
   },
 
-  postData: async (data) => {
+  getJobs: async (description, location, page) => {
     try {
-      const response = await api.post("activity-groups", data);
+      const token = localStorage.getItem("_token");
+      const response = await api.get(`jobs`, {
+        params: {
+          description,
+          location,
+          page,
+        },
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
+      console.log(response);
       return response;
     } catch (err) {
       return err;
     }
   },
-  deleteActivity: async (id) => {
+  getJob: async (id) => {
     try {
-      const response = await api.delete(`activity-groups`);
+      const token = localStorage.getItem("_token");
+      const response = await api.get(`job/${id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
+      console.log(response);
       return response;
     } catch (err) {
       return err;

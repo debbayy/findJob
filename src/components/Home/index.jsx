@@ -20,49 +20,31 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DeleteIcon, SuccessDelete } from "../../assets";
+// import { DeleteIcon, SuccessDelete } from "../../assets";
 import { HomeIcon } from "../../assets";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { createData, deleteData, listActivity } from "../../redux/todosSlicer";
+import { getAllJobs, getDetailJob } from "../../redux/slicer";
 import moment from "moment";
 
 const Home = () => {
-  const { activity } = useSelector((state) => state.todosSlicer);
+  const { activity } = useSelector((state) => state.slicer);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
   const [modalDelete, setModalDelete] = useState(false);
   const toggleDelete = () => setModalDelete(!modalDelete);
-  const [idActivity, setIdActivity] = useState("");
-  const [indexDel, setIndexDel] = useState(null);
+
+  const [description, setDescription] = useState("");
+  const [lokasi, setLokasi] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
-  const activitiesPerPage = 4;
-
-  useEffect(() => {
-    dispatch(listActivity());
-  }, []);
+  const activitiesPerPage = 10;
 
   const formatDate = (cell, row) => {
     let dateFormat = moment(cell).format("DD MMMM YYYY");
     return dateFormat;
-  };
-
-  function listItem() {
-    navigate("/Tambah-Activity");
-  }
-
-  const handlePost = () => {
-    dispatch(createData());
-  };
-  const handleDelete = (e) => {
-    setIdActivity(e);
-    setModal(!modal);
-    const tempIndex = activity.findIndex((item) => item.id === e);
-
-    setIndexDel(tempIndex);
   };
 
   const indexOfLastActivity = currentPage * activitiesPerPage;
@@ -76,52 +58,29 @@ const Home = () => {
     setCurrentPage(pageNumber);
   };
 
-  console.log(idActivity, "idbasdfasd");
+  const findJobs = () => {
+    dispatch(
+      getAllJobs({
+        description: description,
+        location: lokasi,
+        page: currentPage,
+      })
+    );
+  };
 
+  const detailJob = (e) => {
+    //   console.log(e);
+    dispatch(getDetailJob(e));
+    navigate("/detail");
+  };
+
+  useEffect(() => {
+    if (description === "" || lokasi === "") {
+      dispatch(getAllJobs({ description: "", location: "", page: "" }));
+    }
+  }, []);
   return (
     <Container>
-      <Modal isOpen={modalDelete} toggle={toggleDelete} size="ml" centered>
-        <ModalBody>
-          <FormGroup className="d-flex justify-content-start pt-2">
-            <SuccessDelete className="mx-2 mt-1" />
-            <span className="fs-5 ">Activity berhasil dihapus</span>
-          </FormGroup>
-        </ModalBody>
-      </Modal>
-      <Modal isOpen={modal} toggle={toggle} size="ml" centered>
-        <ModalBody className="my-3">
-          <FormGroup className="d-flex justify-content-center">
-            <DeleteIcon />
-          </FormGroup>
-          <FormGroup className="d-flex justify-content-center">
-            <Label className="text-center fs-4 ">
-              Apakah anda yakin menghapus activity
-              <br />
-              <Label className="fw-bold">"{activity[indexDel]?.title}"?</Label>
-            </Label>
-          </FormGroup>
-          <FormGroup className="d-flex justify-content-center">
-            <Button
-              color="light"
-              className="text-muted fw-bold rounded-pill px-5 p-3 mx-2"
-              onClick={toggle}
-            >
-              Batal
-            </Button>
-            <Button
-              color="danger"
-              className="text-white  fw-bold rounded-pill px-5 p-3 mx-2"
-              onClick={() => {
-                dispatch(deleteData({ id: idActivity }));
-                toggleDelete();
-                toggle();
-              }}
-            >
-              Hapus
-            </Button>
-          </FormGroup>
-        </ModalBody>
-      </Modal>
       <Row>
         <Row className="bg-light rounded shadow py-2 border">
           <Col md={4}>
@@ -132,6 +91,8 @@ const Home = () => {
                 name="job"
                 placeholder="Web Developer"
                 type="text"
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
               />
             </FormGroup>
           </Col>
@@ -143,6 +104,8 @@ const Home = () => {
                 name="location"
                 placeholder="Lokasi"
                 type="text"
+                value={lokasi}
+                onChange={(event) => setLokasi(event.target.value)}
               />
             </FormGroup>
           </Col>
@@ -161,30 +124,11 @@ const Home = () => {
             md={2}
             className="d-flex align-items-center justify-content-end pt-3"
           >
-            <Button color="primary" onClick={handlePost} outline>
+            <Button color="primary" onClick={findJobs} outline>
               Search
             </Button>
           </Col>
         </Row>
-
-        {/* <Col>
-          <Label className="fw-bold fs-1">Activity</Label>
-        </Col>
-        <Col>
-          <Col className="d-flex my-2 flex-row-reverse">
-            <Button
-              color="info"
-              onClick={handlePost}
-              className="rounded-pill text-white fw-bold px-4 py-2"
-            >
-              <FontAwesomeIcon
-                className="icon pr-1 mx-1 fw-bold"
-                icon={faAdd}
-              />
-              Tambah
-            </Button>
-          </Col>
-        </Col> */}
       </Row>
       <Row
         className="my-5 bg-light border rounded p-3"
@@ -202,30 +146,36 @@ const Home = () => {
             {currentActivities.map((item) => (
               <Row key={item.id}>
                 <Card
+                  onClick={() => {
+                    detailJob(item.id);
+                  }}
                   className="d-flex cursor:pointer pulse border rounded shadow my-2"
                   style={{
                     minHeight: "10vh",
                     marginLeft: "12px",
                   }}
                 >
-                  <Label
-                    onClick={listItem}
+                  {/* <Label
                     style={{ cursor: "pointer" }}
                     className="mb-auto fw-bold fs-4 m-4"
                   >
                     {item.title}
-                  </Label>
-                  <span className="fs-5 mx-4 d-flex justify-content-between mb-4">
+                  </Label> */}
+                  <Row className=" mx-4 mt-2 d-flex align-items-center justify-content-between">
+                    <Col>
+                      <p className="fs-5 fw-bold text-info">{item.title}</p>
+                      <p>
+                        {item.company_url} - {item.type}
+                      </p>
+                    </Col>
+                    <Col className="text-end">
+                      <p>{item.location}</p>
+                      <p>{item.created_at}</p>
+                    </Col>
+                  </Row>
+                  {/*  <span className="fs-5 mx-4 d-flex justify-content-between">
                     {formatDate(item.created_at)}
-                    <FontAwesomeIcon
-                      className="icon pr-1 mt-1 fw-bold"
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        handleDelete(item.id);
-                      }}
-                      icon={faTrash}
-                    />
-                  </span>
+                  </span> */}
                 </Card>
               </Row>
             ))}
